@@ -1,0 +1,17 @@
+# Blur effect around
+
+ffmpeg -i <input_file> -filter_complex "[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16" <output_file>
+
+ffmpeg -i input_video -loop 1 -i input_image -t 10 -filter_complex "
+[0:v]scale=-1:720[scaled_video];
+[1:v]scale=1280:720,boxblur=50[blur_image];
+[blur_image][scaled_video]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2[outv]" -c:v libx264 -aspect 1280/720 -map [outv] -map 0:a -c:a copy output_video
+
+ffmpeg -i input.mp4 -lavfi "[0:v]scale=1920*2:1080*2,boxblur=luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg];[0:v]scale=-1:1080[ov];[bg][ov]overlay=(W-w)/2:(H-h)/2,crop=w=1920:h=1080" output.mp4
+
+
+ffmpeg -i input.mp4 -lavfi '[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16' -vb 800K output.webm
+
+# Faster blur
+
+ffmpeg -i input.mp4 -vf 'split[original][copy];[copy]scale=ih*16/9:-1,crop=h=iw*9/16,gblur=sigma=20[blurred];[blurred][original]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2' output.mp4

@@ -1,0 +1,17 @@
+To install it right away for all UNIX users (Linux, OS X, etc.), type:
+sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+
+sudo chmod a+rx /usr/local/bin/youtube-dl
+
+If you do not have curl, you can alternatively use a recent wget:
+sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+
+sudo chmod a+rx /usr/local/bin/youtube-dl
+
+You can also use pip:
+sudo pip install --upgrade youtube_dl
+
+This command will update youtube-dl if you have already installed it. See the pypi page for more information.
+
+You can use Homebrew if you have it:
+brew install youtube-dl

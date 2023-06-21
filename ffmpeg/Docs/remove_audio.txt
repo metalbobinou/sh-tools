@@ -1,0 +1,5 @@
+# Copy video without sound
+
+ffmpeg -i infile.avi -c copy -an outfile.avi
+
+ffmpeg -i infile.avi -vcodec copy -an outfile.avi

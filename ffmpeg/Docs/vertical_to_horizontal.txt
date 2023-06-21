@@ -1,0 +1,38 @@
+## Black borders, Blur borders
+
+## Black borders
+
+# Black borders [720p]
+ffmpeg -i input.mp4 -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1:color=black" output.mp4
+
+# Black borders [1080p]
+ffmpeg -i input.mp4 -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:-1:-1:color=black" output.mp4
+
+# Black borders + upscale
+ffmpeg -i input -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1:color=black" output
+
+# Black borders no upscale
+ffmpeg -i input -vf "scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:-1:-1:color=black" output
+
+# Crop to fit
+ffmpeg -i input -vf "scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720" output
+
+# Multiple pictures varying in size
+ffmpeg -i input -vf "scale=1280:720:force_original_aspect_ratio=decrease:eval=frame,pad=1280:720:-1:-1:color=black" output
+
+
+## Blur borders
+
+# Blur borders
+
+ffmpeg -i input.mp4 \
+  -vf 'split[original][copy];[copy]scale=ih*16/9:-1,crop=h=iw*9/16,gblur=sigma=20[blurred];[blurred][original]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2' \
+  output.mp4
+
+
+function ffmpeg-fill-blur()
+{
+  ffmpeg -i $1 \
+    -vf 'split[original][copy];[copy]scale=ih*16/9:-1,crop=h=iw*9/16,gblur=sigma=20[blurred];[blurred][original]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2' \
+    $2
+}
