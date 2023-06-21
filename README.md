@@ -1,6 +1,7 @@
 # sh-tools
 
-A lot of tools and patterns in various languages (sh, bash, awk, ...)
-found on the Web or crafted by myself that are really useful.
+Tool box fulls of functions, scripts, part of code useful while scripting.
+It includes code for Bourne Shell (sh), SED, AWK, Python.
 
-Enjoy,
+Everything comes from the documentation (man pages), and eventually online
+tutorial (like Nix Craft or StackOverflow).
