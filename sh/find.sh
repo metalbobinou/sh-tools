@@ -7,3 +7,6 @@ find . -name "*~"
 
 # Delete emacs temporary files
 find . -name "*~" -delete
+
+# List empty directories
+find . -type d -empty -print
